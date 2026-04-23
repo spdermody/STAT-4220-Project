@@ -1,0 +1,16 @@
+---
+fontsize: 12pt
+geometry: margin=1in
+linkcolor: black
+urlcolor: black
+output: pdf_document
+header-includes:
+- \usepackage{setspace}
+- \onehalfspacing
+- \setlength{\parskip}{12pt}
+---
+
+# Executive summary
+
+Executive summary text
+
