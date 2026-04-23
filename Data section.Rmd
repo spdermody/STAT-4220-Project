@@ -1,0 +1,218 @@
+---
+fontsize: 12pt
+geometry: margin=1in
+linkcolor: black
+urlcolor: black
+output: 
+  pdf_document:
+    extra_dependencies: ["float"]
+header-includes:
+- \usepackage{setspace}
+- \onehalfspacing
+- \setlength{\parskip}{12pt}
+---
+
+```{r setup2, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, highlight=FALSE, message=FALSE, warning=FALSE, fig.pos = "H", out.extra = "")
+```
+
+```{r}
+# Library statements
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+```
+## Data Introduction
+In order to find out what Charlottesville City can be doing to better aid their children both in and outside the classroom, we will need to collect data to gather trend insights and create visualizations. We will also need to go beyond Charlottesville to understand what works in terms of policy and what doesn’t. We chose to stay inside Virginia and gather data from the City of Williamsburg, The City of Alexandria, and the City of Charlottesville. Our reasoning behind this was that the City of Williamsburg is fairly comparable to Charlottesville in income and population. It is only fairly because Williamsburg’s median income is slightly lower but Charlottesville has more distance between the high and low class. We elected to choose the City of Alexandria because we wanted a school district that had a higher median income to see if there is also a difference in funding and school policy that has an influence on children’s growth and test scores. Alexandria, after all, is very unique, because many parents send their kids to private schools, which leaves the public schools with a lot of funding but with lower income students. So, I think specifically focusing on these three precincts we could get a pretty good idea of what successful and less successful precincts do to aid their students. Also we are pulling all our data from around the school year of 2024-2025. We are using Census data from the 2020 census and in some cases, as most recent data as we can get. Also throughout this whole process, we have made sure to cite sources and not gather data from suspicious sources so that it is both accurate and coherent. We trust the VDOE, US Census Bureau, and Virginia Department of Social Services to keep track of accurate data that we can utilize for our analysis.
+
+---
+
+## School Performance & Chronic Absenteeism
+
+### Chronic Absenteeism and Math Performance
+The data that we collected from the VDOE included school quality profiles. In this data we were able to get information on various elementary schools' chronic absenteeism broken up into different demographics from all students, asian, black, hispanic, white, and economically disadvantaged as percentages ranging from current, 3 years from now (Three year), annual average, and long term goal. On top of this we got data on the math performance of the current year, 3 years from now, annual average, as well as the long term goal. We have this data for all of Williamsburg and Alexandria, and we hope to get this data for Charlottesville public schools. Our reasoning behind getting this data is to see if chronic absenteeism affects the performance in school as well as compare if economically disadvantaged students who have a worse absentee would also suffer from worse math scores compared to their peers.  From this we can compare it between districts of Charlottesville, Alexandria, and Williamsburg in order to see whether having a greater absenteeism could have an inverse relationship on the math performance within a school.
+
+### Operational Definitions
+* **Accredited Status:** This variable gives the school as fully accredited or conditionally accredited. For fully accredited that means all information is submitted, and is deemed passing. This differs from conditionally accredited where some of the information fails the test, but the school is not fully denied allowing for a time of correction for the school to course correct.
+
+* **Performance Level:** This variable gives the school a title of on track, distinguished, needs intensive support, and off track. Distinguished is for schools with a high framework score of 90 or above. Needs intensive support is reserved for schools who have a framework score of 79 or below. On track and Off track differ from school to school with some schools having a higher framework score than others, but being labeled as off track while others are labeled as on track.
+* **Framework Score:** A 100-point scale that evaluates schools using four factors being academic mastery, student growth, readiness, and graduation rates.
+
+
+
+
+## Demographic and Social Variables
+
+### Community Demographics
+Some of the initial data that we collected included the Demographics of the 2 cities, Williamsburg and Alexandria, that we are comparing to Charlottesville. More specifically, we looked at Race/Ethnicity alongside Gender as potential variables of interest. For Race/Ethnicity, we collected percentages of people in the city who are White, Black, Asian, Hispanic, and Other. In terms of Gender, we collected the percentages of those who were Female and Male. This information was collected from the U.S. Census Bureau, a reputable source when looking for information similar to this, for 2024. To collect this data, we manually input the data that was in the U.S. Census Bureau website into our Excel data file. We decided to use this data because we felt that the make up of a city in terms of Race/Ethnicity and Gender could tell us more about the education crisis in Charlottesville.
+
+
+```{r demographics-table, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+library(kableExtra)
+
+demo_data <- data.frame(
+  City = c("Charlottesville", "Williamsburg", "Alexandria"),
+  White = c("64.40%", "67.70%", "49.60%"),
+  Black = c("16.80%", "15.00%", "20.70%"),
+  Asian = c("7.00%", "6.50%", "6.24%"),
+  Hispanic = c("6.77%", "7.10%", "18.20%"),
+  Other = c("5.03%", "3.70%", "5.26%"),
+  Male = c("48.10%", "46.40%", "48.50%"),
+  Female = c("51.90%", "53.60%", "51.50%")
+)
+
+kable(demo_data, 
+      format = "latex",
+      caption = "City Demographics: Race, Ethnicity, and Gender (2024)",
+      booktabs = TRUE,
+      align = "lccccccc") %>%
+  kable_styling(latex_options = c("striped", "HOLD_position"), 
+                full_width = F, 
+                font_size = 9) %>%
+  add_header_above(c(" " = 1, "Race/Ethnicity" = 5, "Gender" = 2))
+```
+
+### Crime Rates
+Alongside Demographics, another surface-level variable we decided to look at included Crime Rates. We measured this in Crime per 1000 Residents in each of the previously mentioned cities. To collect this data, we used neighborhoodscout.com, which has an interactive map that shows the Crime Rates in each of the cities in 2024. To collect this data, we used the interactive map to find Williamsburg, Alexandria, and Charlottesville and inserted their Crime per 1000 Residents into our Excel data file. This information seemed important to us because crime is one of the things that could deter students from going to school or excelling in school. Alongside this, Price mentioned crime as one of the potential factors that led to the poor education rates for students in Charlottesville.
+
+### 2. Crime Rates Table
+```{r crime-table, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+library(kableExtra)
+
+crime_data <- data.frame(
+  City = c("Charlottesville", "Williamsburg", "Alexandria"),
+  "Crime Rate" = c(36.00, 14.10, 27.88)
+)
+
+kable(crime_data, 
+      format = "latex",
+      col.names = c("City/Town", "Crimes per 1,000 Residents"),
+      caption = "Comparative Crime Rates (2024)",
+      booktabs = TRUE,
+      align = "lc") %>%
+  kable_styling(latex_options = c("striped", "HOLD_position"), 
+                full_width = F)
+```
+
+### Household Structure
+Another piece of data we pursued was Household Structure. In this, we collected the percentage of adults (over the age of 18), the percentage of children (under the age of 18), and the percentage of single-parent households in Williamsburg, Alexandria, and Charlottesville. The percentages of adults and children were collected through the U.S. Census Bureau, and the single-parent household rate was collected from the Federal Reserve Bank of St. Louis (FRED). The FRED is a reputable source that includes an extensive database filled with economic data. In order to use this data for our use, we collected the data directly from the website for 2024 and input the data into our Excel data file. We decided to include the percentage of adults and children to explore the impact of living in a city with a potentially older demographic in comparison to one with a younger one. Alongside this, we decided to incorporate the percentage of single-parent households because there is prior research done that shows that children raised in single-parent households tend to struggle at a greater rate in school compared to those raised in dual-parent households. These variables provide us with a larger scope when looking at what actually impacts educational performance by students in Charlottesville.
+
+### 3. Household Structure Table
+```{r structure-table, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+library(kableExtra)
+
+struct_data <- data.frame(
+  City = c("Charlottesville", "Williamsburg", "Alexandria"),
+  Adults = c("83.50%", "89.50%", "81.90%"),
+  Children = c("16.50%", "10.50%", "18.10%"),
+  "Single Parent" = c("33.50%", "36.50%", "26.90%")
+)
+
+kable(struct_data, 
+      format = "latex",
+      col.names = c("City/Town", "Adults (>18)", "Children (<18)", "Single-Parent Households"),
+      caption = "Household Structure and Family Composition (2024)",
+      booktabs = TRUE,
+      align = "lccc") %>%
+  kable_styling(latex_options = c("striped", "HOLD_position"), 
+                full_width = F)
+```
+---
+
+## General Census & Economic Metrics
+
+* **Local Children Services Act (CSA) Funding:** This variable comes from the Virginia Department of Social Services and describes the 2024 annual dollar amount that the specific locality (Charlottesville, Williamsburg, Alexandria) has put towards the Children Services Act. This is money that is designed to address the strengths and needs of at-risk youths and their families.
+
+* **Public Transportation Usage:** This variable comes directly from the US Census data and will be helpful in measuring transportation. Though this isn’t directly about school buses, places where workers rely on public transportation will generally have better ways to get to school.
+
+* **Walking to Work:** This variable also comes from the US Census and will represent how densely populated the precinct is. If the area is densely populated, more kids will also walk to school which could be treacherous depending on weather conditions. 
+
+* **Poverty Rate and Median Income:** These statistics were collected from the US Census for each of the localities as a measure of the current state of families in the area, to get a baseline.
+
+* **Cost of Living:** We obtained this data from MIT’s living wage calculator (Feb 2026), which estimates income required for an individual or household (with one or two working adults and up to three children) to meet basic needs, assuming full-time work (2,080 hours per year). We chose to focus specifically on the required annual income before taxes for 2 working adults with 2 kids because that is closest to the average American family.
+
+### 4. General Census Metrics Table
+```{r census-table, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+library(kableExtra)
+
+census_data <- data.frame(
+  City = c("Charlottesville", "Williamsburg", "Alexandria"),
+  Income = c("$69,829", "$70,206", "$113,638"),
+  CostLiving = c("$123,975", "$107,709", "$168,162"),
+  Poverty = c("19.60%", "18.80%", "7.90%"),
+  CSAFunding = c("$1,855,705", "$168,697", "$4,890,219"),
+  PublicTrans = c("5.60%", "1.80%", "12.10%"),
+  Walking = c("11.30%", "11.80%", "2.50%")
+)
+
+kable(census_data, 
+      format = "latex",
+      col.names = c("City", "Median Income", "Cost of Living", "Poverty Rate", 
+                    "CSA Funding", "Public Transp.", "Walking to Work"),
+      caption = "General Census and Economic Indicators (2024)",
+      booktabs = TRUE,
+      align = "lcccccc") %>%
+  kable_styling(latex_options = c("striped", "HOLD_position", "scale_down"), 
+                full_width = F)
+```
+---
+
+## Household Technology Access
+We also wanted to explore the factor of Household Technology Access and its potential effect on the levels of literacy. To achieve this, we used data from the American Community Survey (ACS) conducted by the U.S. Census Bureau (2024), which offers detailed annual information on the country’s housing and demographics statistics. The data used was from the survey on “Types of Computers and Internet Subscriptions.” The most recent data available was from the year 2024, which was the one used for the project. It was also important to compare the data from the year 2023 to ensure that the results from the year 2024 were not extreme or divergent from the previous year’s results. The data was focused on the cities of Charlottesville, Williamsburg, and Alexandria. We chose to exclude the data points that were related to less than 1% of the population of the respective cities. Moreover, we also decided to exclude the data points where the difference between the highest and lowest city was less than 2%, as this was not significant enough to be used. We chose this data based on the potential effect it could have on a student’s ability to study and access educational tools outside of the classroom. Finally, the data used is categorized into three main groups:
+
+
+### Key Technology Categories:
+1.  **Ownership of Computer Devices:** We categorized houses owned by families that own an array of educational tools (e.g., desktops/laptops) separately from families that only own a smartphone. The addition of the variable “smartphone only” allows us to identify families in which the student does not have the hardware needed to complete more advanced academic tasks, such as writing essays or conducting extensive research.
+
+2.  **Internet Connection Quality:** This category will inform us not only whether a household has internet access but also the types of connections and the quality of these connections. We looked specifically at broadband access (including cable, fiber optic, and DSL) versus cell phone plans. This is significant since it is essential that students have access to a reliable, fast internet connection in order to use the current digital learning systems and accomplish their online assignments.
+
+3.  **Gaps in Economic Access:** To gain a more complete understanding of the digital divide, we looked at some variables that relate the economic status of households to the availability of internet services. By examining the availability of internet services among households with less than $20,000 and with the $20,000-$74,999 income level, we can see how financial limitations are linked to the lack of broadband availability or other internet service at home.
+
+
+```{r technology-access-table, echo=FALSE, message=FALSE, warning=FALSE}
+# Load necessary libraries for professional table formatting
+library(knitr)
+library(kableExtra)
+
+# 1. Create the finalized data frame based on your cleaned analysis
+# We focus on rows with material differences (>3%) to remain succinct.
+tech_data <- data.frame(
+  "Technology Category" = c(
+    "Broadband Internet Subscription",
+    "Cellular Data Plan Only",
+    "High-Speed (Cable/Fiber/DSL)",
+    "Low Income (<$20k) w/ Broadband",
+    "Low Income (<$20k) w/o Internet"
+  ),
+  "Alexandria" = c("94.10%", "90.10%", "80.40%", "81.80%", "18.20%"),
+  "Charlottesville" = c("90.40%", "85.40%", "77.50%", "79.20%", "20.80%"),
+  "Williamsburg" = c("92.10%", "90.30%", "76.40%", "86.40%", "13.60%"),
+  "Max Variance" = c("3.70%", "4.90%", "4.00%", "7.20%", "7.20%")
+)
+
+# 2. Generate the captioned kable with the required HOLD_position styling
+kable(tech_data, 
+      format = "latex", # Use "latex" for PDF output
+      caption = "Finalized Household Technology Access and Digital Gaps (2024)",
+      booktabs = TRUE,
+      align = "lcccc") %>%
+  kable_styling(latex_options = c("striped", "HOLD_position"), 
+                full_width = F, 
+                position = "center") %>%
+  column_spec(1, width = "15em") %>% # Ensures the category column doesn't wrap oddly
+  column_spec(5, bold = TRUE)      # Highlights the variance for quick comparison
+```
+
+
+
+
+
+
+
+
+
+
