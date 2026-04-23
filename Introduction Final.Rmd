@@ -1,0 +1,16 @@
+---
+fontsize: 12pt
+geometry: margin=1in
+linkcolor: black
+urlcolor: black
+output: pdf_document
+header-includes:
+- \usepackage{setspace}
+- \onehalfspacing
+- \setlength{\parskip}{12pt}
+---
+# Introduction
+
+Charlottesville City elementary schools have historically had issues with economically disadvantaged students' literacy rates and attendance. At the surface level, this may seem to be an issue in teaching or school resources, but oftentimes it is the out-of-school environment and culture that play a major role in a child's academic output. Prior misallocation and mismanagement of funds have caused Charlottesville to struggle to provide the resources and infrastructure necessary for students to thrive. With that being said, we are looking to explore three major business questions: (1) What are the most important out-of-school-time (OST) environmental domains to invest in? (2) How much would it cost, theoretically, and how much time would it take, given adequate investment, to close this gap in literacy and attendance? (3) Does it cost more if you pay for it later?
+
+To further investigate Charlottesville's struggles, we will explore Virginia school districts with similar educational and demographic profiles. Through researching a wide variety of statistics, patterns, and past successes, we hope to identify a cost-efficient, yet effective investment plan for the city of Charlottesville that will help improve literacy and decrease chronic absenteeism.
