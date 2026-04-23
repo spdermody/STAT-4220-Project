@@ -1,0 +1,45 @@
+```{r}
+names <- c("Participating", "Non-Participating")
+`Academic Performance` <- c(41, 34)
+`School Year Prep` <- c(32, 19)
+
+df<- data.frame(names, `Academic Performance`, `School Year Prep`)
+
+g1<-ggplot(df, aes(x = names, y = `Academic Performance`, fill = names)) +
+  geom_bar(stat = "identity") + # Use "identity" to map the y-axis to your data values
+  theme_minimal() +
+  labs(title = "Academic Performance by Participation",
+       x= "Program Status",
+       y = "Performance Score") +
+  theme(legend.position = "none")
+
+g2<-ggplot(df, aes(x = names, y = `School Year Prep`, fill = names)) +
+  geom_bar(stat = "identity") + 
+  theme_minimal() +
+  labs(title = "School Year Prep by Participation",
+        x= "Program Status",
+       y = "School Year Prep") +
+  theme(legend.position = "none")
+
+fusion<- (g1|g2)
+  
+  fusion
+)
+```
+
+```{r}
+Community <- c("Want to participate", "Actually Participate")
+Demand <- c(100, 19.5)
+df2<- data.frame(Community, Demand)
+
+gg1<-ggplot(df2, aes(x = Community, y = Demand, fill = Community)) +
+  geom_bar(stat = "identity") + 
+  scale_y_continuous(breaks = seq(0, 100, by = 10)) +
+  theme_minimal() +
+  labs(title = "Demand for Afterschool Programs",
+       y = "Percent of People") +
+  theme(legend.position = "none")
+
+
+```
+
